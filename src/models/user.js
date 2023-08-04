@@ -38,10 +38,8 @@ module.exports = (sequelize, DataTypes) => {
   });
   
   User.beforeCreate(function encrypt(user){
-    console.log('before',user);
     const encryptedPassword = bcrypt.hashSync(user.password,+ServerConfig.SALT_ROUNDS);
     user.password = encryptedPassword;
-    console.log('after',user);
   })
 
   return User;
