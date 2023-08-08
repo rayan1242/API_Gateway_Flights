@@ -1,13 +1,17 @@
 const { StatusCodes }= require('http-status-codes');
-const { UserRepository }= require('../repositories');
+const { UserRepository,RoleRepository }= require('../repositories');
 const  AppError = require('../utils/errors/app-error');
-const { Auth } = require('../utils/common');
+const { Auth,ENUMS } = require('../utils/common');
 
 const userRepo = new UserRepository();
+const roleRepo = new RoleRepository();
 
 async function createUser(data){
     try{
         const user = await userRepo.create(data);
+        const role = await roleRepo.getRoleByName(ENUMS.USER_ROLE_ENUMS.CUSTOMER);
+        console.log(role);
+        user.addRole(role);
         return user;
     } catch(error){
         if(error.name = 'SequelizeValidationError' ){
