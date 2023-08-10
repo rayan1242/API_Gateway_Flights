@@ -5,7 +5,6 @@ const { ServerConfig } = require('../../config');
     try{
         return bcrypt.compareSync(plainPassword,encryptedPassword)
     } catch(error){
-        console.log(error);
         throw error;
     }
 }
